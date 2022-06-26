@@ -1,24 +1,33 @@
-import { Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { TodosService } from './todos.service';
 
 @Controller('todos')
 export class TodosController {
+
+   constructor(private todosService: TodosService) {}
+
    @Get('/')
    getTodos() {
-      return 'This action returns all todos';
+      return this.todosService.findAll()
    }
 
    @Get('/:id')
    getTodoById(@Param('id') id: string) {
-      return `This action returns a #${id} todo`;
+      return this.todosService.findById(id)
+   }
+
+   @Post('/')
+   createTodo() {
+      return this.todosService.create()
    }
 
    @Put('/:id')
    updateTodo(@Param('id') id: string) {
-      return `This action updates a #${id} todo`;
+      return this.todosService.update(id)
    }
 
    @Delete('/:id')
    deleteTodo(@Param('id') id: string) {
-      return `This action removes a #${id} todo`;
+      return this.todosService.delete(id)
    }
 }
