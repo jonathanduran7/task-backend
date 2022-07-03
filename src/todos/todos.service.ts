@@ -18,8 +18,8 @@ export class TodosService {
       return this.todoRepository.find()
    }
 
-   findById(id: string) {
-      return `this action returns a #${id} todo`;
+   async findById(id: number) {
+      return await this.todoRepository.findBy({id})
    }
 
    async create(body: CreateTodoDto): Promise<Todo> {
