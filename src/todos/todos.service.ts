@@ -31,8 +31,15 @@ export class TodosService {
       return `This action updates a #${id} todo`;
    }
 
-   delete(id: string) {
-      return `This action removes a #${id} todo`;
+   async delete(id: number) {
+      const todo = await this.todoRepository.findBy({id})
+
+      if(!todo.length) return {msg: 'No existe todo con el id'}
+
+      await this.todoRepository.delete({id})
+      return {
+         msg: 'Todo eliminado'
+      }
    }
 
 }
