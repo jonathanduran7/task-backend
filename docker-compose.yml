@@ -1,0 +1,14 @@
+services:
+  databases:
+    image: mysql:5.6
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "personal"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin"
