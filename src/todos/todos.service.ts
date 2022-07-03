@@ -27,8 +27,15 @@ export class TodosService {
       return await this.todoRepository.save(todo);
    }
 
-   update(id: string, body: UpdateTodoDto) {
-      return `This action updates a #${id} todo`;
+   async update(id: number, body: UpdateTodoDto) {
+
+      const todo = await this.todoRepository.findBy({id})
+
+      if(!todo.length) return {msg: 'No existe todo con el id'}
+      await this.todoRepository.update({id}, body)
+      return {
+         msg: 'Todo actualizado'
+      }
    }
 
    async delete(id: number) {
