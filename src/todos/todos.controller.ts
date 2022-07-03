@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CreateTodoDto } from './dto/CreateTodoDto';
 import { UpdateTodoDto } from './dto/UpdateTodoDto';
 import { TodosService } from './todos.service';
@@ -14,7 +14,7 @@ export class TodosController {
    }
 
    @Get('/:id')
-   getTodoById(@Param('id') id: string) {
+   async getTodoById(@Param('id',ParseIntPipe) id: number) {
       return this.todosService.findById(id)
    }
 
@@ -24,13 +24,12 @@ export class TodosController {
    }
 
    @Put('/:id')
-   updateTodo(@Param('id') id: string, @Body() body: UpdateTodoDto) {
-      console.log(body)
+   async updateTodo(@Param('id',ParseIntPipe) id: number, @Body() body: UpdateTodoDto) {
       return this.todosService.update(id,body)
    }
 
    @Delete('/:id')
-   deleteTodo(@Param('id') id: string) {
+   deleteTodo(@Param('id', ParseIntPipe) id: number) {
       return this.todosService.delete(id)
    }
 }
