@@ -11,20 +11,20 @@ export class TodosService {
 
    constructor(
       @InjectRepository(Todo)
-      todoRepository: Repository<Todo>
+      private readonly todoRepository: Repository<Todo>
    ){}
 
-   findAll() {
-      return 'this action returns all todos';
+   async findAll(): Promise<Todo[]> {
+      return this.todoRepository.find()
    }
 
    findById(id: string) {
       return `this action returns a #${id} todo`;
    }
 
-   create(body: CreateTodoDto) {
-      console.log(body)
-      return 'This action adds a new todo';
+   async create(body: CreateTodoDto): Promise<Todo> {
+      const todo = this.todoRepository.create(body);
+      return await this.todoRepository.save(todo);
    }
 
    update(id: string, body: UpdateTodoDto) {
