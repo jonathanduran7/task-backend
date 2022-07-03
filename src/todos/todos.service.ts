@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { CreateTodoDto } from './dto/CreateTodoDto';
 import { UpdateTodoDto } from './dto/UpdateTodoDto';
+import { Todo } from './entities/todos.entity';
 
 @Injectable()
 export class TodosService {
+
+   constructor(
+      @InjectRepository(Todo)
+      todoRepository: Repository<Todo>
+   ){}
 
    findAll() {
       return 'this action returns all todos';
