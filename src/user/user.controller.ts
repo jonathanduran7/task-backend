@@ -1,4 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { CreateUserDto } from './dtos/create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -18,6 +19,9 @@ export class UserController {
       return this.userService.getMany()
    }
 
-   createOne(){}
+   @Post()
+   async createOne(@Body() dto: CreateUserDto){
+      return await this.userService.createOne(dto)
+   }
 
 }
