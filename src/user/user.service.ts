@@ -25,6 +25,11 @@ export class UserService {
    }
 
    async createOne(dto: CreateUserDto ){
+
+      const userExist = this.userRepository.findOneBy({email: dto.email})
+
+      if(userExist) return {msg: 'user already exists'}
+
       const newUser = this.userRepository.create(dto)
       await this.userRepository.save(newUser)
       return {msg: 'user created'}
