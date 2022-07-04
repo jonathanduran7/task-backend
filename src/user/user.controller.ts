@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { EditUserDto } from './dtos/edit-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -22,6 +23,11 @@ export class UserController {
    @Post()
    async createOne(@Body() dto: CreateUserDto){
       return await this.userService.createOne(dto)
+   }
+
+   @Put(':id')
+   async editOne(@Param('id', ParseIntPipe) id: number, @Body() dto: EditUserDto){
+      return await this.userService.editOne(dto,id)
    }
 
 }
