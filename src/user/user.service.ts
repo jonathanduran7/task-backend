@@ -50,4 +50,15 @@ export class UserService {
          msg: 'User update'
       }
    }
+
+   async deleteOne(id: number){
+      const user = await this.userRepository.findOneBy({id})
+
+      if(!user) return {msg: 'user dont exist'}
+
+      await this.userRepository.delete({id})
+      return {
+         msg: 'user deleted'
+      }
+   }
 }
