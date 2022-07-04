@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { EditUserDto } from './dtos/edit-user.dto';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
@@ -33,5 +34,20 @@ export class UserService {
       const newUser = this.userRepository.create(dto)
       await this.userRepository.save(newUser)
       return {msg: 'user created'}
+   }
+
+   async editOne(dto: EditUserDto, id: number){
+      const user = await this.userRepository.findOneBy({id})
+
+      if(!user) return {msg: 'user dont exist'}
+
+      const userExist = await this.userRepository.findOneBy({email: dto.email})
+
+      if(userExist) return {msg: 'email already exists'}
+
+      await this.userRepository.update({id}, dto)
+      return {
+         msg: 'User update'
+      }
    }
 }
