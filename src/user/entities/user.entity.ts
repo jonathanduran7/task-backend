@@ -30,4 +30,12 @@ export class UserEntity {
 
    @CreateDateColumn({name: 'created_at', type: 'timestamp'})
    createdAt: Date
+
+   @BeforeInsert()
+   @BeforeUpdate()
+   async hashPassword() {
+      if(!this.password) return
+
+      this.password = await hash(this.password, 10)
+   }
 }
