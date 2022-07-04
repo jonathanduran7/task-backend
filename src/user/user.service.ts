@@ -11,4 +11,15 @@ export class UserService {
       private readonly userRepository: Repository<UserEntity>
    ){}
 
+   async getMany(){
+      return await this.userRepository.find()
+   }
+
+   async getOne(id: number){
+      const user = await this.userRepository.findOneBy({id})
+
+      if(!user) return {msg: 'there are not users'}
+
+      return user
+   }
 }
