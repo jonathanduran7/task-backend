@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USERNAME } from './config/constants';
 import { TodosModule } from './todos/todos.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env'
-    })
+    }),
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
