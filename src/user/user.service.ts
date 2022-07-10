@@ -61,4 +61,12 @@ export class UserService {
          msg: 'user deleted'
       }
    }
+
+   async findOne(email: string){
+      return await this.userRepository
+         .createQueryBuilder('user')
+         .where({email})
+         .addSelect('user.password')
+         .getOne()
+   }
 }
